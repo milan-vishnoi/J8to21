@@ -1,4 +1,5 @@
 
+import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -66,7 +67,10 @@ public class LocaleExamples {
         ResourceBundle hindiBundle = ResourceBundle.getBundle("resources.messages", hindi);
         System.out.println("Hindi Locale(" + hindi + ") Greetings:" + hindiBundle.getString("greetings"));
         System.out.println("Hindi Locale(" + hindi + ") Welcome:" + hindiBundle.getString("welcome.message"));
+        System.out.println("Hindi Locale(" + hindi + ") Greetings of Hour without substitution:" + hindiBundle.getString("greetings.ofHours"));
 
+        String pattern = hindiBundle.getString("greetings.ofHours");
+        System.out.println("Hindi Locale(" + hindi + ") Greetings of Hour without substitution:" + MessageFormat.format(pattern, "Good", "Morning"));
     }
 
 }
