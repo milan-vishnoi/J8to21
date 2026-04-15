@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class LocaleExamples {
 
@@ -56,6 +57,15 @@ public class LocaleExamples {
 
         LocalDate parsedDate = LocalDate.parse("11-03-2023", dtf);
         System.out.println("Parsed Date:" + parsedDate);
+
+        System.out.println("----\nTranslation using Resource Bundle\n----");
+        ResourceBundle engIndBundle = ResourceBundle.getBundle("messages", Locale.getDefault());
+        System.out.println("Default Locale(" + Locale.getDefault() + ") Greetings:" + engIndBundle.getString("greetings"));
+        System.out.println("Default Locale(" + Locale.getDefault() + ") Welcome:" + engIndBundle.getString("welcome.message"));
+
+        ResourceBundle hindiBundle = ResourceBundle.getBundle("messages", hindi);
+        System.out.println("Hindi Locale(" + hindi + ") Greetings:" + hindiBundle.getString("greetings"));
+        System.out.println("Hindi Locale(" + hindi + ") Welcome:" + hindiBundle.getString("welcome.message"));
 
     }
 
