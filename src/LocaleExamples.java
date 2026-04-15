@@ -1,0 +1,62 @@
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+public class LocaleExamples {
+
+    public static void main(String[] args) {
+
+        Locale engUs = new Locale("en", "US"); // deprecated since Java 19
+        Locale hindi = Locale.of("hi"); // New way of creating Locale since Java 19
+        Locale currentLocale = Locale.getDefault();
+
+        System.out.println("Hindi Locale:" + hindi);
+        System.out.println("American English Locale:" + engUs);
+        System.out.println("Default Locale: " + currentLocale);
+
+        double price = 200000;
+
+        System.out.println("-----\nHindi Locale\n-----");
+        NumberFormat hindiCurrencyFormat = NumberFormat.getCurrencyInstance(hindi);
+        NumberFormat hindiNumericFormat = NumberFormat.getNumberInstance(hindi);
+        NumberFormat hindiPercentageFormat = NumberFormat.getPercentInstance(hindi);
+
+        System.out.println("Hindi Currency:" + hindiCurrencyFormat.format(price));
+        System.out.println("Hindi Numeric Format:" + hindiNumericFormat.format(price));
+        System.out.println("Hindi Percentage Format: " + hindiPercentageFormat.format(0.2));
+
+        System.out.println("-----\nUS English Locale\n-----");
+        NumberFormat usEngCurrencyFormat = NumberFormat.getCurrencyInstance(engUs);
+        NumberFormat usEngNumericFormat = NumberFormat.getNumberInstance(engUs);
+        NumberFormat usEngPercentageFormat = NumberFormat.getPercentInstance(engUs);
+
+        System.out.println("US English Currency:" + usEngCurrencyFormat.format(price));
+        System.out.println("US English Numeric Format:" + usEngNumericFormat.format(price));
+        System.out.println("US English Percentage Format: " + usEngPercentageFormat.format(0.2));
+
+        System.out.println("-----\nParsing the values\n-----");
+
+        try {
+            System.out.println("Parse Value for Hindi Numeric Format:" + hindiNumericFormat.parse("85,00,000"));
+            System.out.println("Parse Value for US English Currency:" + usEngCurrencyFormat.parse("$850,000"));
+            System.out.println("Parse Value for Hindi Percentage Format:" + hindiPercentageFormat.parse("85%"));
+        } catch (ParseException e) {
+            System.err.println("Some exception occured:" + e.getMessage());
+        }
+
+        System.out.println("----\nFormatting Date\n----");
+        LocalDate date = LocalDate.of(2023, Month.MARCH, 11);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy", hindi); // YYYY is for ISO week date
+        String formattedDate = dtf.format(date); // can also be written as date.format(dtf)
+        System.out.println("Formatted Date:" + formattedDate);
+
+        LocalDate parsedDate = LocalDate.parse("11-03-2023", dtf);
+        System.out.println("Parsed Date:" + parsedDate);
+
+    }
+
+}
