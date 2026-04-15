@@ -4,9 +4,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LocalDateTimeExamples {
 
@@ -47,6 +49,14 @@ public class LocalDateTimeExamples {
         System.out.println("Current Time for " + zid + ": " + zdt);
         zdt = ZonedDateTime.of(LocalDateTime.now(), zid); //doesn't convert the time, just changes the timezone
         System.out.println("Zoned Date Time of " + zid + ":" + zdt);
+
+        System.out.println("----\nFormatting Date\n----");
+        LocalDate date = LocalDate.of(2023, Month.MARCH, 11);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); // YYYY is for ISO week date
+        String formattedDate = dtf.format(date); // can also be written as date.format(dtf)
+        System.out.println("Formatted Date:" + formattedDate);
+        LocalDate parsedDate = LocalDate.parse("11-03-2023", dtf);
+        System.out.println("Parsed Date:" + parsedDate);
 
     }
 
