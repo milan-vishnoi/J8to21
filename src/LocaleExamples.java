@@ -59,11 +59,11 @@ public class LocaleExamples {
         System.out.println("Parsed Date:" + parsedDate);
 
         System.out.println("----\nTranslation using Resource Bundle\n----");
-        ResourceBundle engIndBundle = ResourceBundle.getBundle("messages", Locale.getDefault());
+        ResourceBundle engIndBundle = ResourceBundle.getBundle("resources.messages", Locale.getDefault());
         System.out.println("Default Locale(" + Locale.getDefault() + ") Greetings:" + engIndBundle.getString("greetings"));
         System.out.println("Default Locale(" + Locale.getDefault() + ") Welcome:" + engIndBundle.getString("welcome.message"));
 
-        ResourceBundle hindiBundle = ResourceBundle.getBundle("messages", hindi);
+        ResourceBundle hindiBundle = ResourceBundle.getBundle("resources.messages", hindi);
         System.out.println("Hindi Locale(" + hindi + ") Greetings:" + hindiBundle.getString("greetings"));
         System.out.println("Hindi Locale(" + hindi + ") Welcome:" + hindiBundle.getString("welcome.message"));
 
