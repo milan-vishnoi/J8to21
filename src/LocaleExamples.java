@@ -26,19 +26,23 @@ public class LocaleExamples {
         NumberFormat hindiCurrencyFormat = NumberFormat.getCurrencyInstance(hindi);
         NumberFormat hindiNumericFormat = NumberFormat.getNumberInstance(hindi);
         NumberFormat hindiPercentageFormat = NumberFormat.getPercentInstance(hindi);
+        NumberFormat hindiCompactFormat = NumberFormat.getCompactNumberInstance();
 
         System.out.println("Hindi Currency:" + hindiCurrencyFormat.format(price));
         System.out.println("Hindi Numeric Format:" + hindiNumericFormat.format(price));
         System.out.println("Hindi Percentage Format: " + hindiPercentageFormat.format(0.2));
+        System.out.println("Hindi Compact Number Format: " + hindiCompactFormat.format(price));
 
         System.out.println("-----\nUS English Locale\n-----");
         NumberFormat usEngCurrencyFormat = NumberFormat.getCurrencyInstance(engUs);
         NumberFormat usEngNumericFormat = NumberFormat.getNumberInstance(engUs);
         NumberFormat usEngPercentageFormat = NumberFormat.getPercentInstance(engUs);
+        NumberFormat usEngCompactFormat = NumberFormat.getCompactNumberInstance(engUs, NumberFormat.Style.SHORT);
 
         System.out.println("US English Currency:" + usEngCurrencyFormat.format(price));
         System.out.println("US English Numeric Format:" + usEngNumericFormat.format(price));
         System.out.println("US English Percentage Format: " + usEngPercentageFormat.format(0.2));
+        System.out.println("US English Compact Number Format: " + usEngCompactFormat.format(2000000));
 
         System.out.println("-----\nParsing the values\n-----");
 
