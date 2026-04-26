@@ -9,12 +9,21 @@ interface SampleFunctionalInterface {
 
     void run();
 
+    // default methods in interface were introduced Java 8
     default void start() {
+        printHello();
         System.out.println("This is default start function");
     }
 
+    // static methods in interface were introduced Java 8
     static void utility() {
         System.out.println("This is static utility function");
+    }
+
+    // private methods in interface were introduced Java 9
+    private void printHello() {
+        System.out.println("Hellos from private method.");
+
     }
 
 }
@@ -28,6 +37,8 @@ public class FunctionalInterfaceExample {
         sfi.run();
         sfi.start();
         SampleFunctionalInterface.utility();
+        // FunctionalInterfaceExample.utility(); Not allowed
+        // sfi.utility(); Not allowed
 
         System.out.println("-----\nBuilt in Functional Interfaces");
         Predicate<Integer> checkEven = x -> x % 2 == 0;
