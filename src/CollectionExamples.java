@@ -40,6 +40,7 @@ public class CollectionExamples {
         System.out.printf("\nAdd 2:%s Map:%s", map.put(2, "two"), map);
         System.out.printf("\nUpdate 1(ek):%s Map:%s", map.put(1, "Ek"), map);
         System.out.printf("\nPut if absent 2(do):%s Map:%s", map.putIfAbsent(2, "do"), map);
+        System.out.printf("\nRemove using key value{2,\"do\"}, removed:%s Map:%s", map.remove(2, "do"), map);
         System.out.printf("\nRemove 2:%s Map:%s", map.remove(2), map);
         System.out.println("\n-----------------------");
 
