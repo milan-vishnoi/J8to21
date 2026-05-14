@@ -42,6 +42,7 @@ public class CollectionExamples {
         System.out.printf("\nPut if absent 2(do):%s Map:%s", map.putIfAbsent(2, "do"), map);
         System.out.printf("\nRemove using key value{2,\"do\"}, removed:%s Map:%s", map.remove(2, "do"), map);
         System.out.printf("\nRemove 2:%s Map:%s", map.remove(2), map);
+        System.err.printf("\nKey Set:%s Value:%s", map.keySet(), map.values());
         System.out.println("\n-----------------------");
 
         set.add("Four");
