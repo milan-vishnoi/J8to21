@@ -19,8 +19,25 @@ public class CollectionExamples {
         System.out.println("Fixed size list sorted:" + list);
         // list.add(5); Giving the UnsupportedOperationException because the list is fixed size
         list = List.of(3, 4, 5, 6);
-        System.out.println("Read only list:" + list);
         //list.set(2, 3); Giving the UnsupportedOperationException becasuse list is Read only
+        System.out.println("Read only list:" + list);
+
+        System.out.print("Printing using iterator:");
+        Iterator<Integer> listIterator = list.iterator();
+        while (listIterator.hasNext()) {
+            System.out.print(" " + listIterator.next());
+            if (!listIterator.hasNext()) {
+                System.out.println("");
+            }
+        }
+
+        System.out.print("Printing using for each loop:");
+        for (int element : list) {
+            System.out.print(" " + element);
+            if (list.lastIndexOf(element) == list.size() - 1) {
+                System.out.println("");
+            }
+        }
 
         System.out.println("----\nSet\n----");
         set = new HashSet<>();
