@@ -1,7 +1,10 @@
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class StreamExamples {
 
@@ -12,6 +15,7 @@ public class StreamExamples {
         System.out.println("1.Vertical Processing\n2.Lazy Processing\n3.filter-map-forEach");
         System.out.println("4.filter-map-collect\n5.filter-map-reduce\n6.filter-map-count");
         System.out.println("7.Any Match\n8.All Match\n9.Map vs FlatMap");
+        System.out.println("10.Stream Generation");
         Scanner sc = new Scanner(System.in);
         int testCase = sc.nextInt();
         sc.close();
@@ -99,6 +103,23 @@ public class StreamExamples {
                     System.out.println("Map:" + x);
                     return x.stream();
                 }).forEach(element -> System.out.println("Element:" + element));
+            }
+
+            case 10 -> {
+                System.out.println("-----\nStream generation");
+                System.out.println("IntStream generate:");
+                int sumRandom = IntStream.generate(() -> (int) (Math.random() * 10))
+                        .peek(x -> System.out.println("Generated Number:" + x))
+                        .takeWhile(n -> n != 3).sum();
+                System.out.println("Random sum:" + sumRandom);
+                System.out.print("Stream.of:");
+                int product = Stream.of(1, 2, 3, 4).peek(x -> System.out.print(" " + x)).reduce(1, (a, b) -> a * b);
+                System.out.println("\nProduct using Stream:" + product);
+                System.out.print("Arrays Stream:");
+                int[] arr = {2, 3, 4, 5, 6};
+                long countEven = Arrays.stream(arr).peek(x -> System.out.print(" " + x)).filter(x -> x % 2 == 0).count();
+                System.out.println("\nCount even:" + countEven);
+
             }
 
             default -> {
