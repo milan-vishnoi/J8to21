@@ -20,7 +20,7 @@ public class CollectionExamples {
         // list.add(5); Giving the UnsupportedOperationException because the list is fixed size
         list = List.of(3, 4, 5, 6);
         //list.set(2, 3); Giving the UnsupportedOperationException becasuse list is Read only
-        System.out.println("Read only list:" + list);
+        System.out.print("Read only list:" + list);
 
         System.out.print("Printing using iterator:");
         Iterator<Integer> listIterator = list.iterator();
@@ -38,6 +38,11 @@ public class CollectionExamples {
                 System.out.println("");
             }
         }
+
+        System.out.print("Printing using forEach method:");
+        //Added in Java 8
+        list.forEach(x -> System.out.print(" " + x));
+        System.out.println("");
 
         System.out.println("----\nSet\n----");
         set = new HashSet<>();
