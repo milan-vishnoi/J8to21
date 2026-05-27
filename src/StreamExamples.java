@@ -15,7 +15,7 @@ public class StreamExamples {
         System.out.println("1.Vertical Processing\n2.Lazy Processing\n3.filter-map-forEach");
         System.out.println("4.filter-map-collect\n5.filter-map-reduce\n6.filter-map-count");
         System.out.println("7.Any Match\n8.All Match\n9.Map vs FlatMap");
-        System.out.println("10.Stream Generation");
+        System.out.println("10.Stream Generation\n11.Parallel Stream");
         Scanner sc = new Scanner(System.in);
         int testCase = sc.nextInt();
         sc.close();
@@ -119,6 +119,17 @@ public class StreamExamples {
                 int[] arr = {2, 3, 4, 5, 6};
                 long countEven = Arrays.stream(arr).peek(x -> System.out.print(" " + x)).filter(x -> x % 2 == 0).count();
                 System.out.println("\nCount even:" + countEven);
+
+            }
+
+            case 11 -> {
+
+                list = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                System.out.println("-----\nParallel Stream:");
+                System.out.print("Without parallel():");
+                list.stream().forEach(x -> System.out.print(" " + x));
+                System.out.print("\nWith parallel():");
+                list.stream().parallel().forEach(x -> System.out.print(" " + x));
 
             }
 
