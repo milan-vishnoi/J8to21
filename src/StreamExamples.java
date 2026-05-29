@@ -1,7 +1,9 @@
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -15,7 +17,7 @@ public class StreamExamples {
         System.out.println("1.Vertical Processing\n2.Lazy Processing\n3.filter-map-forEach");
         System.out.println("4.filter-map-collect\n5.filter-map-reduce\n6.filter-map-count");
         System.out.println("7.Any Match\n8.All Match\n9.Map vs FlatMap");
-        System.out.println("10.Stream Generation\n11.Parallel Stream");
+        System.out.println("10.Stream Generation\n11.Parallel Stream\n12.Spliterator");
         Scanner sc = new Scanner(System.in);
         int testCase = sc.nextInt();
         sc.close();
@@ -131,6 +133,25 @@ public class StreamExamples {
                 System.out.print("\nWith parallel():");
                 list.stream().parallel().forEach(x -> System.out.print(" " + x));
 
+            }
+
+            case 12 -> {
+                System.out.println("-----\nSpliterator:");
+                Spliterator<Integer> s = new Random().ints(10, 0, 10).spliterator();
+                String characteristics
+                        = "Concurrent " + s.hasCharacteristics(Spliterator.CONCURRENT) + "\n"
+                        + "Distinct " + s.hasCharacteristics(Spliterator.DISTINCT) + "\n"
+                        + "Immutable " + s.hasCharacteristics(Spliterator.IMMUTABLE) + "\n"
+                        + "NonNull " + s.hasCharacteristics(Spliterator.NONNULL) + "\n"
+                        + "Ordered " + s.hasCharacteristics(Spliterator.ORDERED) + "\n"
+                        + "Sized " + s.hasCharacteristics(Spliterator.SIZED) + "\n"
+                        + "Sorted " + s.hasCharacteristics(Spliterator.SORTED) + "\n"
+                        + "Subsized " + s.hasCharacteristics(Spliterator.SUBSIZED);
+                System.out.println(characteristics);
+                System.out.println("Size " + s.getExactSizeIfKnown());
+                System.out.println("Estimate Size " + s.estimateSize());
+                System.out.print("Try Advance of Spliterator:");
+                s.tryAdvance(System.out::println);
             }
 
             default -> {
