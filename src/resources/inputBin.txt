@@ -1,0 +1,1 @@
+This is just sample file created for reading and writing the data through the java io apis. This is named as inputBin because the we are using binary data reading in this. The output file of this will contain the same data because we are just copying it from inputBin.txt to outputBin.txt. 
