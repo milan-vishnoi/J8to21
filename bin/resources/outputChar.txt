@@ -1,0 +1,3 @@
+This is some randomly types sentences because I wanted to write something in this file in order to just test the things with the file reader and writer. First I have typed this text in the inputChar and from there I will copy it into the outputChar.txt file. This is done to illustarte the usage of the character reader and writer.
+
+Now you will know that this is the output file so we have used it for writing. This text is also replaced by the program to make it relevant to the file i.e. we have replaced the output instead of input in the program.
