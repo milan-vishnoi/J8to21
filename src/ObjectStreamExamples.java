@@ -1,6 +1,8 @@
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
@@ -20,10 +22,29 @@ public class ObjectStreamExamples implements Serializable {
             out.writeObject(obj);
             out.writeObject("\nEOF"); // String is an object and is Serializable
             out.writeObject(1); // Will treated as Object of Integer which is Number which is Serializable
-            System.out.println("Successfully write the data into the file");
+            System.out.println("Successfully wrote the data into the file");
         } catch (IOException ex) {
-            System.out.println("Some issue occured:" + ex);
+            System.out.println("IO Exception occurred:" + ex);
+        } catch (Exception ex) {
+            System.out.println("Some exception occurred:" + ex);
+
         }
+
+        System.out.println("Reading the file data:");
+
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("src\\resources\\serializedFile.txt"))) {
+            System.out.println((ObjectStreamExamples) in.readObject());
+
+        } catch (IOException ex) {
+            System.out.println("IO Exception occurred:" + ex);
+        } catch (Exception ex) {
+            System.out.println("Some exception occurred:" + ex);
+        }
+
+    }
+
+    public String toString() {
+        return "Number:" + number + " Type:" + type;
     }
 
 }
