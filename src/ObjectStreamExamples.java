@@ -18,7 +18,8 @@ public class ObjectStreamExamples implements Serializable {
         ObjectStreamExamples obj = new ObjectStreamExamples(1, "Input Stream");
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src\\resources\\serializedFile.txt"))) {
             out.writeObject(obj);
-
+            out.writeObject("\nEOF"); // String is an object and is Serializable
+            out.writeObject(1); // Will treated as Object of Integer which is Number which is Serializable
             System.out.println("Successfully write the data into the file");
         } catch (IOException ex) {
             System.out.println("Some issue occured:" + ex);
