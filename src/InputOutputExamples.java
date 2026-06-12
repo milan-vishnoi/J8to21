@@ -1,4 +1,5 @@
 
+import java.io.Console;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -6,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -48,6 +50,22 @@ public class InputOutputExamples {
             }
         } catch (IOException ex) {
             System.out.println("Exception occured:" + ex.getMessage());
+        }
+
+        //Console
+        Console c = System.console();
+        if (c == null) {
+            System.out.println("Console is not supported");
+            return;
+        }
+
+        PrintWriter out = c.writer();
+        out.println("To quite type: exit");
+        out.println("Type value and press enter:");
+        String txt = null;
+        while (!(txt = c.readLine()).equals("exit")) {
+            out.println("Echo: " + txt);
+
         }
     }
 
