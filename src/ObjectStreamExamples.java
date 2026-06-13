@@ -10,6 +10,7 @@ public class ObjectStreamExamples implements Serializable {
 
     String type;
     int number;
+    private static final long serialVersionUID = 2L;
 
     public ObjectStreamExamples(int number, String type) {
         this.number = number;
