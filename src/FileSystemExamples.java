@@ -1,8 +1,11 @@
 
+import java.nio.charset.Charset;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 
 public class FileSystemExamples {
 
@@ -57,6 +60,31 @@ public class FileSystemExamples {
                 Files.createSymbolicLink(someFileSym, someFile);
                 System.out.println("Symbolic link for " + someFile + " created as " + someFileSym);
             }
+
+            System.out.println("");
+            System.out.println("Content type of Somefile:" + Files.probeContentType(someFile));
+            System.out.println("Some is readable?" + Files.isReadable(someFile));
+            System.out.println("Some is writeable?" + Files.isWritable(someFile));
+
+            BasicFileAttributes fa = Files.readAttributes(someFile, BasicFileAttributes.class);
+            long size = fa.size();
+            System.out.println("Size:" + fa.size() + " characters");
+            FileTime createdTime = fa.creationTime();
+            FileTime lastModifiedTime = fa.lastModifiedTime();
+            // System.out.println("Some file-\nCreated at %s\nLast Modified at %s".formatted(createdTime, lastModifiedTime));
+            System.out.println("Writing the Created and Modified time into the file");
+            Files.writeString(someFile, "Some file-\nCreated at %s\nLast Modified at %s".formatted(createdTime, lastModifiedTime));
+            System.out.println("Wrote the data into the file, reading below:");
+            Files.lines(someFile, Charset.forName("UTF-8")).forEach(System.out::println);
+
+            System.out.println("\nCreating a temp dir and temp file:");
+            Path tempDir = Files.createTempDirectory("TEMP");
+            Path tempFile = Files.createTempFile(tempDir, "TEMP", ".tmp");
+            System.out.println("Temp:" + tempFile);
+            Files.deleteIfExists(tempFile);
+            System.out.println("Deleted the temp file");
+            Files.deleteIfExists(tempDir);
+            System.out.println("Deleted the temp dir");
 
             System.out.println("");
             System.out.println("Listing the contents of %s:".formatted(docsFolder));
