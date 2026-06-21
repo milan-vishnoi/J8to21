@@ -1,4 +1,6 @@
 
+import java.util.Scanner;
+
 class ThreadedClass implements Runnable {
 
     static int count = 0;
@@ -42,61 +44,114 @@ class ChildThreadClass extends Thread {
 public class MultiThreadingExamples {
 
     public static void main(String[] args) {
-        System.out.println("-----\nUsing Class with Runnable Interface\n-----");
-        ThreadedClass td = new ThreadedClass();
-        Thread t1 = new Thread(td);
-        Thread t2 = new Thread(td);
-        System.out.println("Name   State isAlive toString             Priority");
-        System.out.println(t1.getName() + " " + t1.getState() + " " + t1.isAlive() + " " + t1.toString() + " " + t1.getPriority());
-        System.out.println(t2.getName() + " " + t2.getState() + " " + t2.isAlive() + " " + t2.toString() + " " + t2.getPriority());
-        t1.start();
-        t2.start();
-        System.out.println("Is Alive:" + t1.isAlive() + " " + t2.isAlive());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            System.out.println("Interrupted Exception Occured:" + e);
-        }
+        int op = 0;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Here are the options:");
+        String options = """
+        1. Using Class with Runnable Interface
+        2. By Extending Thread Class
+        3. Using Lambda Expression
+        4. Wait Example""";
+        System.out.println(options);
+        System.out.print("Choose your option:");
+        op = sc.nextInt();
+        switch (op) {
+            case 1 -> {
+                System.out.println("-----\nUsing Class with Runnable Interface\n-----");
+                ThreadedClass td = new ThreadedClass();
+                Thread t1 = new Thread(td);
+                Thread t2 = new Thread(td);
+                System.out.println("Name   State isAlive toString             Priority");
+                System.out.println(t1.getName() + " " + t1.getState() + " " + t1.isAlive() + " " + t1.toString() + " " + t1.getPriority());
+                System.out.println(t2.getName() + " " + t2.getState() + " " + t2.isAlive() + " " + t2.toString() + " " + t2.getPriority());
+                t1.start();
+                t2.start();
+                System.out.println("Is Alive:" + t1.isAlive() + " " + t2.isAlive());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted Exception Occured:" + e);
+                }
 
-        System.out.println("State of Thread:" + t1.getState() + " " + t2.getState());
+                System.out.println("State of Thread:" + t1.getState() + " " + t2.getState());
+            }
 
-        System.out.println("-----\nBy Extending Thread Class\n-----");
-        Thread t3 = new ChildThreadClass();
-        t3.start();
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println("Exception Occured:" + e);
-        }
+            case 2 -> {
+                System.out.println("-----\nBy Extending Thread Class\n-----");
+                Thread t3 = new ChildThreadClass();
+                t3.start();
+            }
 
-        System.out.println("-----\nUsing Lambda Expression\n-----");
-        Runnable r = () -> {
-            System.out.println("Within the Lambda Expression");
-            Thread currentThread = Thread.currentThread();
-            System.out.println("Current Thread:" + currentThread);
-            int count = 0;
-            while (!currentThread.isInterrupted()) {
-                System.out.println("Ping " + ++count + "... The thread is not interrupted");
+            case 3 -> {
+                System.out.println("-----\nUsing Lambda Expression\n-----");
+                Runnable r = () -> {
+                    System.out.println("Within the Lambda Expression");
+                    Thread currentThread = Thread.currentThread();
+                    System.out.println("Current Thread:" + currentThread);
+                    int count = 0;
+                    while (!currentThread.isInterrupted()) {
+                        System.out.println("Ping " + ++count + "... The thread is not interrupted");
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            System.out.println("Exception:" + e);
+                            System.out.println("Thread Interrupted. Closing.....");
+                            return;
+                        }
+                    }
+
+                };
+
+                Thread t4 = new Thread(r, "Lambda-Thread-1");
+                t4.start();
+                try {
+                    Thread.sleep(4000);
+                } catch (Exception e) {
+                    System.out.println("Exception:" + e);
+                }
+                t4.interrupt();
+            }
+
+            case 4 -> {
+                System.out.println("-----\nWait Example\n-----");
+                Object obj = new Object();
+                Runnable r2 = () -> {
+                    Thread ct = Thread.currentThread();
+                    System.out.println("Within the thread " + ct);
+                    try {
+                        System.out.println("Before the waiting, thread state:" + ct.getState());
+                        synchronized (obj) {
+                            obj.wait();
+                            System.out.println("Wait over, state:" + ct.getState());
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Exception:" + e);
+                    }
+                };
+
+                Thread t5 = new Thread(r2, "Wait-Example-Thread");
+                t5.start();
+                //Added below delay to see the waiting state
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     System.out.println("Exception:" + e);
-                    System.out.println("Thread Interrupted. Closing.....");
-                    return;
                 }
+                System.out.println("After wait, state:" + t5.getState());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Exception:" + e);
+                }
+                synchronized (obj) {
+                    obj.notifyAll();
+                }
+                System.out.println("Thread notified, state:" + t5.getState());
             }
 
+            default ->
+                System.out.println("Select correct option");
         };
-
-        Thread t4 = new Thread(r);
-        t4.setPriority(8);
-        t4.start();
-        try {
-            Thread.sleep(4000);
-        } catch (Exception e) {
-            System.out.println("Exception:" + e);
-        }
-        t4.interrupt();
 
     }
 
