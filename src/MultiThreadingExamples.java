@@ -14,7 +14,7 @@ class ThreadedClass implements Runnable {
 public class MultiThreadingExamples {
 
     public static void main(String[] args) {
-        System.out.println("This is main of MultiThreadingExamples");
+        System.out.println("-----\nUsing Class with Runnable Interface\n-----");
         ThreadedClass td = new ThreadedClass();
         Thread t1 = new Thread(td);
         Thread t2 = new Thread(td);
@@ -31,6 +31,34 @@ public class MultiThreadingExamples {
         }
 
         System.out.println("State of Thread:" + t1.getState() + " " + t2.getState());
+
+        System.out.println("-----\nUsing Lambda Expression\n-----");
+        Runnable r = () -> {
+            System.out.println("Within the Lambda Expression");
+            Thread currentThread = Thread.currentThread();
+            System.out.println("Current Thread:" + currentThread);
+            int count = 0;
+            while (!currentThread.isInterrupted()) {
+                System.out.println("Ping " + ++count + "... The thread is not interrupted");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Exception:" + e);
+                    System.out.println("Thread Interrupted. Closing.....");
+                    return;
+                }
+            }
+
+        };
+
+        Thread t3 = new Thread(r);
+        t3.start();
+        try {
+            Thread.sleep(4000);
+        } catch (Exception e) {
+            System.out.println("Exception:" + e);
+        }
+        t3.interrupt();
 
     }
 
