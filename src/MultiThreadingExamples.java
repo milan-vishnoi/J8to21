@@ -57,8 +57,25 @@ public class MultiThreadingExamples {
         """;
         System.out.println(options);
         System.out.print("Choose your option:");
-        Thread thread = null;
+
         op = sc.nextInt();
+        Thread thread = null;
+        Thread threadMonitor = new Thread() {
+
+            public void run() {
+                while (!Thread.currentThread().isInterrupted()) {
+                    System.out.println("Monitor thread: Thread Count=" + Thread.activeCount());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        System.out.println("Some exception Occured:" + e);
+                    }
+                }
+            }
+
+        };
+        threadMonitor.setDaemon(true);
+        threadMonitor.start();
         switch (op) {
             case 1 -> {
                 System.out.println("-----\nUsing Class with Runnable Interface\n-----");
@@ -204,7 +221,8 @@ public class MultiThreadingExamples {
             }
 
             default ->
-                System.out.println("Select correct option");
+                System.out.println("Select correct option, current thread count:" + Thread.activeCount());
+
         }
 
         if (thread != null) {
