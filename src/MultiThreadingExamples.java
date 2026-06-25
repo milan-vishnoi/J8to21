@@ -51,9 +51,13 @@ public class MultiThreadingExamples {
         1. Using Class with Runnable Interface
         2. By Extending Thread Class
         3. Using Lambda Expression
-        4. Wait Example""";
+        4. Wait Example
+        5. Daemon & Non-Daemon Threads
+        6. Join
+        """;
         System.out.println(options);
         System.out.print("Choose your option:");
+        Thread thread = null;
         op = sc.nextInt();
         switch (op) {
             case 1 -> {
@@ -149,9 +153,71 @@ public class MultiThreadingExamples {
                 System.out.println("Thread notified, state:" + t5.getState());
             }
 
+            case 5 -> {
+                System.out.println("-----\nDaemon & Non-Daemon(User) Threads\n-----");
+                Runnable r1 = () -> {
+                    Thread currentThread = Thread.currentThread();
+                    System.out.println("Start of %s thread %s".formatted(currentThread.isDaemon() ? "Daemon" : "Non-Daemon(user)", currentThread));
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        System.out.println("Some exception occured:" + e);
+                    }
+                    System.out.println("Exiting %s thread %s".formatted(currentThread.isDaemon() ? "Daemon" : "Non-Daemon(user)", currentThread));
+                };
+
+                Thread daemonThread = new Thread(r1, "Daemon Thread");
+                daemonThread.setDaemon(true);
+                Thread nondaemonThread = new Thread(r1, "Non-Daemon(user) Thread");
+
+                nondaemonThread.start();
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                    System.out.println("Some exception occurred:" + e);
+                }
+                daemonThread.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    System.out.println("Some exception occurred:" + e);
+                }
+
+            }
+
+            case 6 -> {
+                System.out.println("-----\nJoin(the main thread will wait)\n-----");
+                Runnable r1 = () -> {
+                    Thread currentThread = Thread.currentThread();
+                    System.out.println("Start of %s thread %s".formatted(currentThread.isDaemon() ? "Daemon" : "Non-Daemon(user)", currentThread));
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        System.out.println("Some exception occured:" + e);
+                    }
+                    System.out.println("Exiting %s thread %s".formatted(currentThread.isDaemon() ? "Daemon" : "Non-Daemon(user)", currentThread));
+                };
+
+                thread = new Thread(r1);
+                thread.start();
+
+            }
+
             default ->
                 System.out.println("Select correct option");
-        };
+        }
+
+        if (thread != null) {
+            try {
+                System.out.println("Main thread is waiting for thread %s to finish".formatted(thread));
+                thread.join();
+            } catch (Exception e) {
+                System.out.println("Some exception occured:" + e);
+            }
+
+        }
+
+        System.out.println("Exiting main thread");
 
     }
 
